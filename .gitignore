@@ -1,0 +1,5 @@
+venv
+api/
+*.pyc
+.idea
+.DS_Store

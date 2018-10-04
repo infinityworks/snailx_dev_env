@@ -1,5 +1,5 @@
 up:
-	vagrant ssh -c "python /vagrant/main.py"
+	vagrant ssh -c "python /vagrant/api/main.py"
 
 build:
 	vagrant provision
