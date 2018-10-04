@@ -17,3 +17,6 @@ destroy-all:
 
 migrate-db:
 	vagrant ssh -c "cd /vagrant/repos/snailx_api/api && FLASK_APP=main.py flask db init && FLASK_APP=main.py flask db migrate && FLASK_APP=main.py flask db upgrade"
+
+test:
+	vagrant ssh -c ". /vagrant/venv/bin/activate; python -m unittest discover -s /vagrant/repos/snailx_api/api -p "*_test.py""
