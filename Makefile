@@ -1,5 +1,5 @@
 up:
-	vagrant ssh -c "python /vagrant/api/main.py"
+	vagrant ssh -c ". /vagrant/venv/bin/activate; python /vagrant/repos/api/main.py"
 
 build:
 	vagrant provision
@@ -16,4 +16,4 @@ destroy-all:
 	ps -ef |grep VBox | awk '{print $2}' | xargs kill
 
 migrate-db:
-	vagrant ssh -c "cd /vagrant && FLASK_APP=main.py flask db init && FLASK_APP=main.py flask db migrate && FLASK_APP=main.py flask db upgrade"
+	vagrant ssh -c "cd /vagrant/repos/api && FLASK_APP=main.py flask db init && FLASK_APP=main.py flask db migrate && FLASK_APP=main.py flask db upgrade"
