@@ -16,7 +16,7 @@ destroy-all:
 	ps -ef |grep VBox | awk '{print $2}' | xargs kill
 
 migrate-db:
-	vagrant ssh -c "cd /vagrant/repos/snailx_api/api && FLASK_APP=main.py flask db init && FLASK_APP=main.py flask db migrate && FLASK_APP=main.py flask db upgrade"
+	vagrant ssh -c ". /vagrant/venv/bin/activate; cd /vagrant/repos/snailx_api/api && FLASK_APP=main.py flask db init && FLASK_APP=main.py flask db migrate && FLASK_APP=main.py flask db upgrade"
 
 test:
 	vagrant ssh -c ". /vagrant/venv/bin/activate; python -m unittest discover -s /vagrant/repos/snailx_api/api -p "*_test.py""
