@@ -3,3 +3,5 @@ api/
 *.pyc
 .idea
 .DS_Store
+.vagrant
+
