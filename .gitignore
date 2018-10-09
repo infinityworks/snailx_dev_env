@@ -107,3 +107,4 @@ venv.bak/
 api/
 .vagrant
 coverage_html/
+test-reports/
