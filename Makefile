@@ -12,6 +12,7 @@ install-requirements:
 	pip install flask-migrate
 	pip install pyjwt
 	pip install coverage
+	pip install unittest-xml-reporting
 
 destroy-all:
 	vagrant box list | cut -f 1 -d ' ' | xargs -L 1 vagrant box remove -f
