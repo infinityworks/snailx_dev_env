@@ -11,6 +11,7 @@ install-requirements:
 	pip install flask-sqlalchemy
 	pip install flask-migrate
 	pip install pyjwt
+	pip install coverage
 
 destroy-all:
 	vagrant box list | cut -f 1 -d ' ' | xargs -L 1 vagrant box remove -f
@@ -24,3 +25,8 @@ migrate-db:
 
 test:
 	vagrant ssh -c ". /vagrant/venv/bin/activate; python /vagrant/repos/snailx_api/api/test_runner.py"
+
+test-coverage:
+	vagrant ssh -c ". /vagrant/venv/bin/activate; coverage run --source /vagrant/repos/snailx_api/api /vagrant/repos/snailx_api/api/test_runner.py test; coverage html -d /vagrant/coverage_html --skip-covered"
+	rm -rf /coverage_html
+	scp -rP 2222 vagrant@127.0.0.1:/vagrant/coverage_html .

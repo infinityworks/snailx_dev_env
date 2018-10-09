@@ -106,3 +106,4 @@ venv.bak/
 # vagrant
 api/
 .vagrant
+coverage_html/
