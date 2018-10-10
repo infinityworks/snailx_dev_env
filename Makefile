@@ -38,4 +38,4 @@ test-xml:
 	scp -rP 2222 vagrant@127.0.0.1:/home/vagrant/test-reports .
 
 up-gunicorn:
-	vagrant ssh -c ". /vagrant/venv/bin/activate; export SECRET_KEY="'\x00\xc2\xd7O\xadj\xce\xe91\x8e*p\xfdB\xb7\x9b\xe4\xbd\xb6\x95\xa1\xd6X\xd3'"; cd /vagrant/repos/snailx_api/api; gunicorn --bind 0.0.0.0:8000 wsgi"
+	vagrant ssh -c ". /vagrant/venv/bin/activate; export SECRET_KEY="'\x00\xc2\xd7O\xadj\xce\xe91\x8e*p\xfdB\xb7\x9b\xe4\xbd\xb6\x95\xa1\xd6X\xd3'"; cd /vagrant/repos/snailx_api/api; gunicorn --bind 0.0.0.0:5000 wsgi"
