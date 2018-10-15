@@ -2,7 +2,7 @@
   become: yes
   vars:
     venv_path: "/vagrant/venv"
-    requirements_path: "/vagrant/repos/snailx_api/requirements.txt"
+    requirements_path: "/vagrant/repos/snailx_admin_panel/requirements.txt"
   tasks:
     - name: Add key for jonathonf PPA
       apt_key:
