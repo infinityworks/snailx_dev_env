@@ -108,3 +108,5 @@ api/
 .vagrant
 coverage_html/
 test-reports/
+
+*.log

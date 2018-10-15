@@ -4,9 +4,11 @@
   vars:
     venv_path: "/vagrant/venv"
     requirements_path: "/vagrant/repos/snailx_api/requirements.txt"
-    dbname: snailx
-    dbuser: dev
-    dbpassword: snailx_dev_pwd
+    dbname: "snailx"
+    dbuser: "dev"
+    dbpassword: "snailx_dev_pwd"
+    dburl: "localhost"
+    flask_secret_key: "\x00\xc2\xd7O\xadj\xce\xe91\x8e*p\xfdB\xb7\x9b\xe4\xbd\xb6\x95\xa1\xd6X\xd3"
   tasks:
     - name: Add key for jonathonf PPA
       apt_key:
@@ -69,21 +71,46 @@
       become: yes
       become_user: postgres
       postgresql_user:
-        name: "snailx_dev"
-        password: "snailx_dev_pass"
+        name: "{{ dbuser }}"
+        password: "{{ dbpassword }}"
         encrypted: "yes"
 
     - name: Create postgres database
       become_user: postgres
       postgresql_db:
-        name: "snailx"
-        owner: "snailx_dev"
+        name: "{{ dbname }}"
+        owner: "{{ dbuser }}"
 
     - name: Ensure user has access to database
       become: yes
       become_user: postgres
       postgresql_privs:
-        db: "snailx"
-        role: "snailx_dev"
+        db: "{{ dbname }}"
+        role: "{{ dbuser }}"
         objs: ALL_IN_SCHEMA
         privs: ALL
+
+    - name: Add secret key env var
+      lineinfile:
+        path: /etc/environment
+        line: 'export SECRET_KEY={{ flask_secret_key }}'
+
+    - name: Add postgres url env var
+      lineinfile:
+        path: /etc/environment
+        line: 'export POSTGRES_URL={{ dburl }}'
+
+    - name: Add postgres user env var
+      lineinfile:
+        path: /etc/environment
+        line: 'export POSTGRES_USER={{ dbuser }}'
+
+    - name: Add postgres db name env var
+      lineinfile:
+        path: /etc/environment
+        line: 'export POSTGRES_DB={{ dbname }}'
+
+    - name: Add postgres pw env var
+      lineinfile:
+        path: /etc/environment
+        line: 'export POSTGRES_PW={{ dbpassword }}'
