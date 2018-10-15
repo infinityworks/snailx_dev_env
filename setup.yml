@@ -1,8 +1,12 @@
 - hosts: all
   become: yes
+  gather_facts: no
   vars:
     venv_path: "/vagrant/venv"
     requirements_path: "/vagrant/repos/snailx_api/requirements.txt"
+    dbname: snailx
+    dbuser: dev
+    dbpassword: snailx_dev_pwd
   tasks:
     - name: Add key for jonathonf PPA
       apt_key:
@@ -44,3 +48,42 @@
         virtualenv: "{{ venv_path }}"
         virtualenv_python: python3.6
         requirements: "{{ requirements_path }}"
+      
+    - name: install PostgreSQL
+      sudo: yes
+      apt: name={{ item }} update_cache=true state=present
+      with_items:
+        - postgresql
+        - postgresql-contrib
+        - libpq-dev
+        - python3-psycopg2
+        - python-psycopg2
+
+    - name: Ensure the PostgreSQL service is running
+      service: 
+        name: postgresql 
+        state: started 
+        enabled: yes
+
+    - name: Create postgres user
+      become: yes
+      become_user: postgres
+      postgresql_user:
+        name: "snailx_dev"
+        password: "snailx_dev_pass"
+        encrypted: "yes"
+
+    - name: Create postgres database
+      become_user: postgres
+      postgresql_db:
+        name: "snailx"
+        owner: "snailx_dev"
+
+    - name: Ensure user has access to database
+      become: yes
+      become_user: postgres
+      postgresql_privs:
+        db: "snailx"
+        role: "snailx_dev"
+        objs: ALL_IN_SCHEMA
+        privs: ALL

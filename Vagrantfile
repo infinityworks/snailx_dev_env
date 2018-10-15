@@ -7,5 +7,6 @@ Vagrant.configure("2") do |config|
 
  config.vm.provision "ansible_local" do |a|
    a.playbook = "setup.yml"
+   a.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
  end
 end
