@@ -1,0 +1,14 @@
+- hosts: all
+  become: yes
+  gather_facts: no
+  vars:
+    venv_path: "/vagrant/venv"
+    requirements_path: "/vagrant/repos/snailx_api/requirements.txt"
+    dbname: "snailx"
+    dbuser: "dev"
+    dbpassword: "snailx_dev_pwd"
+    dburl: "localhost"
+    flask_secret_key: "\x00\xc2\xd7O\xadj\xce\xe91\x8e*p\xfdB\xb7\x9b\xe4\xbd\xb6\x95\xa1\xd6X\xd3"
+  tasks:
+    - include: /vagrant/snailx_dev_env/python_tasks.yml
+    - include: /vagrant/snailx_dev_env/postgresql_tasks.yml

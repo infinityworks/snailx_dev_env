@@ -1,0 +1,63 @@
+- name: install PostgreSQL
+  sudo: yes
+  apt: name={{ item }} update_cache=true state=present
+  with_items:
+    - postgresql
+    - postgresql-contrib
+    - libpq-dev
+    - python3-psycopg2
+    - python-psycopg2
+
+- name: Ensure the PostgreSQL service is running
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
+
+- name: Create postgres user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ dbuser }}"
+    password: "{{ dbpassword }}"
+    encrypted: "yes"
+
+- name: Create postgres database
+  become_user: postgres
+  postgresql_db:
+    name: "{{ dbname }}"
+    owner: "{{ dbuser }}"
+
+- name: Ensure user has access to database
+  become: yes
+  become_user: postgres
+  postgresql_privs:
+    db: "{{ dbname }}"
+    role: "{{ dbuser }}"
+    objs: ALL_IN_SCHEMA
+    privs: ALL
+
+- name: Add secret key env var
+  lineinfile:
+    path: /etc/environment
+    line: "export SECRET_KEY={{ flask_secret_key }}"
+
+- name: Add postgres url env var
+  lineinfile:
+    path: /etc/environment
+    line: "export POSTGRES_URL={{ dburl }}"
+
+- name: Add postgres user env var
+  lineinfile:
+    path: /etc/environment
+    line: "export POSTGRES_USER={{ dbuser }}"
+
+- name: Add postgres db name env var
+  lineinfile:
+    path: /etc/environment
+    line: "export POSTGRES_DB={{ dbname }}"
+
+- name: Add postgres pw env var
+  lineinfile:
+    path: /etc/environment
+    line: "export POSTGRES_PW={{ dbpassword }}"
