@@ -1,6 +1,7 @@
 Vagrant.configure("2") do |config|
     config.vm.box = "bento/ubuntu-16.04"
 
+    #forward flask app
     config.vm.network "forwarded_port", guest: 5000, host: 5000
 
     config.vm.synced_folder "../repos", "/vagrant/repos"
