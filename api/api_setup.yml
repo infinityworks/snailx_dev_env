@@ -11,9 +11,9 @@
     flask_secret_key: "\x00\xc2\xd7O\xadj\xce\xe91\x8e*p\xfdB\xb7\x9b\xe4\xbd\xb6\x95\xa1\xd6X\xd3"
     app_settings: "config.config.DevelopmentConfig"
   tasks:
-    - name: Set the app setting environment variable
-      lineinfile:
-        path: /etc/environment
-        line: "export APP_SETTINGS={{ app_settings }}"
+    # configure the APP_SETTINGS environment variable based on above var app_settings
+    - include: /vagrant/snailx_dev_env/app_settings_tasks.yml
+    # configure python3 on vm and install pip dependencies from requirements.txt
     - include: /vagrant/snailx_dev_env/python_tasks.yml
+    # configure postgresql local db, users etc
     - include: /vagrant/snailx_dev_env/postgresql_tasks.yml
