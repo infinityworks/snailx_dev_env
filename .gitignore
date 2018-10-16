@@ -104,7 +104,6 @@ venv.bak/
 .mypy_cache/
 
 # vagrant
-api/
 .vagrant
 coverage_html/
 test-reports/
