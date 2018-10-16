@@ -1,5 +1,5 @@
 up:
-	vagrant ssh -c ". /vagrant/venv/bin/activate; export SECRET_KEY="'\x00\xc2\xd7O\xadj\xce\xe91\x8e*p\xfdB\xb7\x9b\xe4\xbd\xb6\x95\xa1\xd6X\xd3'"; python /vagrant/repos/snailx_admin_panel/snailx_admin.py"
+	vagrant ssh -c ". /vagrant/venv/bin/activate; python /vagrant/repos/snailx_admin_panel/snailx_admin.py"
 
 build:
 	vagrant provision
@@ -19,4 +19,4 @@ destroy-all:
 	ps -ef |grep VBox | awk '{print $2}' | xargs kill
 
 up-gunicorn:
-	vagrant ssh -c ". /vagrant/venv/bin/activate; export SECRET_KEY="'\x00\xc2\xd7O\xadj\xce\xe91\x8e*p\xfdB\xb7\x9b\xe4\xbd\xb6\x95\xa1\xd6X\xd3'"; cd /vagrant/repos/snailx_admin_panel; gunicorn --bind 0.0.0.0:5000 wsgi"
+	vagrant ssh -c ". /vagrant/venv/bin/activate; cd /vagrant/repos/snailx_admin_panel; gunicorn --bind 0.0.0.0:5000 wsgi"
