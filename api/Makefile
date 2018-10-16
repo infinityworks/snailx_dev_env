@@ -16,7 +16,11 @@ init-db:
 
 migrate-db:
 	vagrant ssh -c "cd /vagrant/repos/snailx_api/api && . /vagrant/venv/bin/activate; \
-		python manage.py db migrate && python manage.py db upgrade"
+		python manage.py db migrate"
+
+upgrade-db:
+	vagrant ssh -c "cd /vagrant/repos/snailx_api/api && . /vagrant/venv/bin/activate; \
+		python manage.py db upgrade"
 
 test:
 	vagrant ssh -c ". /vagrant/venv/bin/activate; \
