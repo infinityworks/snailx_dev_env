@@ -22,6 +22,14 @@ upgrade-db:
 	vagrant ssh -c "cd /vagrant/repos/snailx_api/api && . /vagrant/venv/bin/activate; \
 		python manage.py db upgrade"
 
+dummy-data-save-db:
+	vagrant ssh -c "pg_dump -h localhost -p 5432 -U dev
+		-d snailx -T alembic_version -f /vagrant/repos/snailx_api/api/db/dummy_data.dump --format custom"
+
+dummy-data-load-db:
+	vagrant ssh -c "PGPASSWORD="snailx_dev_pwd" pg_restore -h localhost -p 5432 \
+		-U dev -d snailx --clean -v /vagrant/repos/snailx_api/api/db/dummy_data.dump"
+
 test:
 	vagrant ssh -c ". /vagrant/venv/bin/activate; \
 		python /vagrant/repos/snailx_api/api/test_runner.py;"
