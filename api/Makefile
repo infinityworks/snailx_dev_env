@@ -42,3 +42,7 @@ test-xml:
 up-gunicorn:
 	vagrant ssh -c ". /vagrant/venv/bin/activate; \
 		cd /vagrant/repos/snailx_api/api; gunicorn --bind 0.0.0.0:5000 wsgi"
+
+create-user:
+	vagrant ssh -c "cd /vagrant/repos/snailx_api/api && . /vagrant/venv/bin/activate; \
+		python manage.py create_user"
