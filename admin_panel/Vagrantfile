@@ -7,6 +7,8 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "../../snailx_dev_env", "/vagrant/snailx_dev_env"
     config.vm.synced_folder "../../repos", "/vagrant/repos"
 
+    config.vm.network :private_network, ip: "172.28.128.4"
+
     config.vm.provision "ansible_local" do |a|
         a.playbook = "admin_panel_setup.yml"
         a.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }

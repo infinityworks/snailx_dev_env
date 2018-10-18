@@ -7,7 +7,7 @@
     dbname: "snailx"
     dbuser: "dev"
     dbpassword: "dev"
-    dburl: "10.0.0.148"
+    dburl: "172.28.128.3"
     flask_secret_key: "\x00\xc2\xd7O\xadj\xce\xe91\x8e*p\xfdB\xb7\x9b\xe4\xbd\xb6\x95\xa1\xd6X\xd3"
     app_settings: "config.config.DevelopmentConfig"
   tasks:
