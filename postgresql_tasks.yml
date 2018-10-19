@@ -37,6 +37,29 @@
     objs: ALL_IN_SCHEMA
     privs: ALL
 
+- name: Copy over pg_hba.conf files for allowing outside connections.
+  become: yes
+  template:
+    src: pg_hba.conf
+    dest: /etc/postgresql/9.5/main/pg_hba.conf
+    owner: postgres
+    group: postgres
+    mode: 0640
+
+- name: Copy over postgresql.conf config files for allowing outside connections.
+  become: yes
+  template:
+    src: postgresql.conf
+    dest: /etc/postgresql/9.5/main/postgresql.conf
+    owner: postgres
+    group: postgres
+    mode: 0640
+
+- name: Restart the PostgreSQL service
+  service:
+    name: postgresql
+    state: restarted
+
 - name: Add postgres url env var
   lineinfile:
     path: /etc/environment
