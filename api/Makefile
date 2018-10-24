@@ -27,7 +27,7 @@ dummy-data-save-db:
 		-d snailx -T alembic_version -f /vagrant/repos/snailx_api/api/db/dummy_data.dump --format custom"
 
 dummy-data-load-db:
-	vagrant ssh -c "PGPASSWORD="snailx_dev_pwd" pg_restore -h localhost -p 5432 \
+	vagrant ssh -c "PGPASSWORD="dev" pg_restore -h localhost -p 5432 \
 		-U dev -d snailx --clean -v /vagrant/repos/snailx_api/api/db/dummy_data.dump"
 
 test:
