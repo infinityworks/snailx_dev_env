@@ -24,11 +24,11 @@ upgrade-db:
 
 dummy-data-save-db:
 	vagrant ssh -c "pg_dump -h localhost -p 5432 -U dev
-		-d snailx -T alembic_version -f /vagrant/repos/snailx_api/api/db/dummy_data.dump --format custom"
+		-d snailx -T alembic_version -f /vagrant/repos/snailx_api/api/db/dummy_data.dump"
 
 dummy-data-load-db:
-	vagrant ssh -c "PGPASSWORD="dev" pg_restore -h localhost -p 5432 \
-		-U dev -d snailx --clean -v /vagrant/repos/snailx_api/api/db/dummy_data.dump"
+	vagrant ssh -c "psql -h localhost -p 5432 \
+		-U dev -d snailx < /vagrant/repos/snailx_api/api/db/dummy_data.dump"
 
 test:
 	vagrant ssh -c ". /vagrant/venv/bin/activate; \
